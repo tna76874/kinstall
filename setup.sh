@@ -15,7 +15,8 @@ DEBCL="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudf
 DIR="/tmp/tv"
 
 update_system() {
-    sudo apt update && sudo apt upgrade -y || sudo apt --fix-broken install && sudo apt update && sudo apt upgrade -y
+    sudo apt --fix-broken install
+    sudo apt update && sudo apt upgrade -y
 }
 
 # install teamviewer

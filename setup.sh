@@ -3,6 +3,20 @@
 DEB="https://download.teamviewer.com/download/linux/teamviewer_amd64.deb"
 DIR="/tmp/tv"
 
+update_system() {
+    sudo apt update && sudo apt upgrade -y || sudo apt --fix-broken install && sudo apt update && sudo apt upgrade -y
+}
+
+# install teamviewer
+install_tv() {
+    mkdir -p "$DIR"
+    cd "$DIR"
+
+    wget -P "$DIR" "$DEB"
+
+    sudo dpkg --install "$DIR/teamviewer_amd64.deb"
+}
+
 # start teamviewer daemon and optionally set PW
 start_teamviewer_daemon() {
   # cleanup running teamviewer
@@ -17,11 +31,4 @@ start_teamviewer_daemon() {
   sudo teamviewer license accept >/dev/null 2>&1
 }
 
-mkdir -p "$DIR"
-cd "$DIR"
-
-wget -P "$DIR" "$DEB"
-
-sudo dpkg --install "$DIR/teamviewer_amd64.deb"
-
-start_teamviewer_daemon
+install_tv && start_teamviewer_daemon

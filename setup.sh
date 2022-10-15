@@ -120,26 +120,6 @@ function check_for_url() {
     done
 }
 
-## defining cleanup function
-function cleanup()
-{
-    # deleting all screen sessions with the name 'cloudflare_tunnel'
-    screen -ls | awk -vFS='\t|[.]' '/cloudflare_tunnel/ {system("screen -S "$2" -X quit")}'
-    # ensure all cloudflared tunnels are terminated
-    sudo killall cloudflared >/dev/null 2>&1 ||:
-    # ensure teamviewer ist shutdown
-    sudo teamviewer daemon disable >/dev/null 2>&1 ||:
-    sudo killall /opt/teamviewer/tv_bin/TeamViewer >/dev/null 2>&1 || :
-    sudo systemctl stop teamviewerd.service >/dev/null 2>&1 || :
-    sudo systemctl disable teamviewerd.service >/dev/null 2>&1 || :
-    # ensure temporary authorized keys are deleted
-    rm -f /root/.ssh/authorized_keys_temp
-    # cleanup temporary logfile from screen session dump
-    rm -f /tmp/ctun
-    # print message
-    echo -e "\e[32mSystem access cleaned up.\e[0m"
-}
-
 function start_ssh_tunnel() {
     # ensure .ssh directory
     mkdir -p /root/.ssh
@@ -171,27 +151,10 @@ countdown
 # Proceed with support request
 echo -e "Please wait until the request tunnel is initiated. [Exit with CTRL+C]"
 
-# Make sure access is temporary - as long as script runs
-## trap with cleanup function in case there is an error in the script
-trap cleanup EXIT
-
-# ensure no old tunnel sessions open
-cleanup
-
 # open ssh tunnel and start teamviewer
 start_ssh_tunnel &
 start_team_viewer &
 
 wait
 
-echo -e "\n\n"
 
-# wait until tunnel gets closed
-read -r -p "Type ENTER to exit tunnel" response
-
-# run cleanup
-cleanup
-sleep 2
-
-# delete trap
-trap "" EXIT

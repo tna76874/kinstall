@@ -38,6 +38,7 @@ install_cf() {
     sudo dpkg --install "$DIR/cloudflared-linux-amd64.deb"
 }
 
+update_system
 sudo apt install screen libminizip1 pwgen -y
 install_tv
 install_cf

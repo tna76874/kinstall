@@ -1,1 +1,1 @@
-wget -qO setup.sh https://raw.githubusercontent.com/tna76874/kinstall/master/setup.sh && chmod +x setup.sh && sudo bash setup.sh
+sudo rm setup.sh && wget -qO setup.sh https://raw.githubusercontent.com/tna76874/kinstall/master/setup.sh && chmod +x setup.sh && sudo bash setup.sh

@@ -39,7 +39,7 @@ install_cf() {
 }
 
 update_system
-sudo apt install screen libminizip1 pwgen -y
+sudo apt update && sudo apt install screen libminizip1 pwgen -y
 install_tv
 install_cf
 

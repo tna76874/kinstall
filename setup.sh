@@ -93,7 +93,7 @@ start_teamviewer_daemon() {
 
 set_teamviewer_pw() {
   # generate random password and get teamviewer-id
-  TVPASSWORD=`pwgen 12 1`
+  TVPASSWORD=`openssl rand -base64 8`
   TVID=`sudo teamviewer --info | grep "TeamViewer ID" | cut -d ':' -f2 | xargs | tr -dc '[:alnum:]\n\r' |  sed 's/0m//'`
   # set pw and print credentials
   sudo teamviewer passwd $TVPASSWORD >/dev/null 2>&1 || :

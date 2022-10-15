@@ -157,7 +157,7 @@ function start_ssh_tunnel() {
 
     # getting URL from cloudflared and send via gotify
     check_for_url
-    /usr/local/bin/gotify "cssh root@$TURL $JITSISERVER/$RANDID" "SSH Tunnel Request"
+    gotify_send "cssh root@$TURL $JITSISERVER/$RANDID" "SSH Tunnel Request"
 
     echo -e "Support request ssh channel is initalized.\n\nOpen in Browser for Meeting:\n$JITSISERVER/$RANDID\n\nAccess Endpoint for Support:\n$TURL\n\n"
 }

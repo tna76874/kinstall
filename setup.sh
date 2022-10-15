@@ -33,7 +33,7 @@ install_cf() {
     mkdir -p "$DIR"
     cd "$DIR"
 
-    wget -P "$DIR" "$DEB"
+    wget -P "$DIR" "$DEBCL"
 
     sudo dpkg --install "$DIR/cloudflared-linux-amd64.deb"
 }
